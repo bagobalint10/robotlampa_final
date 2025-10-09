@@ -30,8 +30,5 @@
 
  uint8_t PORT_Read(volatile uint8_t *port){
 
-	//volatile uint8_t port_read = *port;
-	//return port_read;
-
 	return *port;
  }

@@ -8,20 +8,15 @@
 
 
 
- /*	  pinout 
-  
-  data	-		d0x80 -> d7
-  clock -		d0x20 -> d5
-  latch	- 		d0x40 -> d6  
-  gombos láb -	c0x10 -> c4
-*/
+
 
 #ifndef PORT_CONFIG_H_
 #define PORT_CONFIG_H_
 
 	#include <avr/io.h>
 
-	// pinout 
+	// port config shift registerhez
+
 	#define SR_LATCH_PORT PORTD		// --> D6
 	#define SR_LATCH_PIN PORTD6
 	#define SR_LATCH_DIR DDRD
@@ -33,7 +28,47 @@
 	#define SR_CLOCK_PORT PORTD		// --> D5
 	#define SR_CLOCK_PIN PORTD5
 	#define SR_CLOCK_DIR DDRD
+	 /*	  pinout shift register 
+  
+	data	-		d0x80 -> d7
+	clock -		d0x20 -> d5
+	latch	- 		d0x40 -> d6
+	*/
 
+	// port config a gombokhoz 
+
+	#define BTN_UP_PORT PORTC		// --> C0  
+	#define BTN_UP_PIN PORTC0
+	#define BTN_UP_DIR DDRC
+	#define BTN_UP_PIN_IN PINC		// bemenet olvasáshoz 
+
+	#define BTN_DOWN_PORT PORTC		// --> C1
+	#define BTN_DOWN_PIN PORTC1
+	#define BTN_DOWN_DIR DDRC
+	#define BTN_DOWN_PIN_IN PINC		
+
+	#define BTN_ENTER_PORT PORTC		// --> C2
+	#define BTN_ENTER_PIN PORTC2
+	#define BTN_ENTER_DIR DDRC
+	#define BTN_ENTER_PIN_IN PINC		
+
+	#define BTN_MODE_PORT PORTC		// --> C30
+	#define BTN_MODE_PIN PORTC3
+	#define BTN_MODE_DIR DDRC
+	#define BTN_MODE_PIN_IN PINC
+	
+	#define BTN_COMMON_PIN_IN PINC // csak ha az összes gomb  egy porton van 	
+
+//
+/*
+		gomb bekotes:	 (egy port ra a pinchange miatt majd)
+
+						Up 		- 	A0 - PC0 - 0x01 	
+						Down 	- 	A1 - PC1 - 0x02
+						Enter	-	A2 - PC2 - 0x04 
+						Mode 	- 	A3 - PC3 - 0x08
+*/
+//
 
 	// logic
 
