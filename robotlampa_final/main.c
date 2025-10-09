@@ -28,6 +28,15 @@ int main(void)
 
 	PORT_Init(&DDRC,PORTC0,0); // PC0 - input
 	PORT_Write(&PORTC,PORTC0,1); // P0 - pullup?
+
+	PORT_Init(&DDRC,PORTC1,0); // PC1
+	PORT_Write(&PORTC,PORTC1,1); 
+
+	PORT_Init(&DDRC,PORTC2,0); // PC2
+	PORT_Write(&PORTC,PORTC2,1); 
+
+	PORT_Init(&DDRC,PORTC3,0); // PC3
+	PORT_Write(&PORTC,PORTC3,1); 
 	//
     while (1) 
     {
@@ -37,11 +46,11 @@ int main(void)
 		//segment_write_digit(0x01,(uint8_t)(0x01 && 0x00), 0, 1);
 		segment_write_digit(0x01,(uint8_t) (((buttons&0x01) && 0x01)+48), 0, 1);
 		_delay_ms(1);
-		segment_write_digit(0x02, 'c', 0, 1);
+		segment_write_digit(0x02,(uint8_t) (((buttons&0x02) && 0x01)+48), 0, 1);
 		_delay_ms(1);
-		segment_write_digit(0x04, 'b', 0, 1);
+		segment_write_digit(0x04,(uint8_t) (((buttons&0x04) && 0x01)+48), 0, 1);
 		_delay_ms(1);
-		segment_write_digit(0x08, 'a', 0, 1);
+		segment_write_digit(0x08,(uint8_t) (((buttons&0x08) && 0x01)+48), 0, 1);
 		_delay_ms(1);
     }
 }
