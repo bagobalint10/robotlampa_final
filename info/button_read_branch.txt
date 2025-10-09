@@ -4,5 +4,9 @@ na gomb fejlesztés
 		- kész 
 	2. interrupt modul
 			minden interupt callback innen indul
-			callbacket csinalni az interruptnak 
+			callbacket csinalni az interruptnak
+			1. csak a set callback és az ISR legyen benne 
+			- most: kitakarítani ezeket a dolgokat:
+				- pcint_init(pcint_c, 0b00000111);
+					az interrupt ba legyen benne 
 		

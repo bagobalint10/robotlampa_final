@@ -76,6 +76,11 @@
 	#define PCINT_C 1
 	#define PCINT_D 2
 
+	//pcint valid mask--> amiket használhatok 
+	#define PCMSK0_VALID_MASK  0b00111111  // PB0–PB5, ha XTAL1/2-t nem használod
+	#define PCMSK1_VALID_MASK  0b00111111  // PC0–PC5
+	#define PCMSK2_VALID_MASK  0xFF        // PD0–PD7
+
 
 
 

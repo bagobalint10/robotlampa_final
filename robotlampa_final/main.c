@@ -40,7 +40,7 @@ int main(void)
 
 	// it callback beállítása 
 	set_pcint_Callback(PCINT_C, pcint_c_callback);
-	pcint_init();
+	pcint_init(PCINT_C, 0b00001111);
 	//
     while (1) 
     {	 /*

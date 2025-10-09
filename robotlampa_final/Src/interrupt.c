@@ -31,23 +31,32 @@ void (*pcint_c_callback_pointer)(void) = NULL;
 
  } */
 
- void pcint_init(void)	// ideiglenes 
+ void pcint_init(uint8_t port, uint8_t mask)  //pcint init hal 
  {
+
+	switch (port)
+	{
+	case 0 :											// B
+				PCICR |= (1 << PCIE0);					// enable port B pcint 
+				PCMSK0 |= PCMSK0_VALID_MASK & mask;		// port B pin mask 
+				sei();	
+				break;
+	case 1 :											// C
+				PCICR |= (1 << PCIE1);					// enable port B pcint
+				PCMSK1 |= PCMSK1_VALID_MASK & mask;		// port B pin mask
+				sei();
+				break;
+	case 2 :											// D
+				PCICR |= (1 << PCIE2);					// enable port B pcint
+				PCMSK2 |= PCMSK2_VALID_MASK & mask;		// port B pin mask
+				sei();
+				break;
+	default: break;
+	}
 	
-	 PCICR |= (1 << PCIE1);	    // Engedélyezzük a PCINT1 megszakításcsoportot (PCINT[14:8], azaz PORTC)
-
-				// Engedélyezzük a PC0–PC3 lábakon a pin change interruptot
-				// (PCINT8–PCINT11)
-	 PCMSK1 |= (1 << PCINT8) | (1 << PCINT9) | (1 << PCINT10) | (1 << PCINT11);
-
-	
-	 //DDRC &= ~((1 << PC0) | (1 << PC1) | (1 << PC2) | (1 << PC3));	 // Beállítjuk a PORTC biteket bemenetre (biztonság kedvéért)
-
-					// (Opcionálisan) felhúzóellenállásokat bekapcsolhatunk, ha kell:
-					// PORTC |= (1 << PC0) | (1 << PC1) | (1 << PC2) | (1 << PC3);
-
-					// Globális megszakítások engedélyezése
-	 sei();
+	  
+					
+	 
  }
 
  ISR(PCINT1_vect)
