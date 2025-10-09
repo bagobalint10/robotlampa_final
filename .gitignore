@@ -1,0 +1,23 @@
+# Microchip Studio / Atmel Studio ideiglenes és felhasználó-specifikus fájlok
+.vs/
+*.user
+*.suo
+
+# Build output
+Debug/
+Release/
+*.obj
+*.o
+*.hex
+*.elf
+*.bin
+
+# IDE cache, temporary files
+ipch/
+*.log
+*.pch
+*.tmp
+
+# Egyéb automatikusan generált fájlok
+*.bak
+*.lastbuildstate
