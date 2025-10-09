@@ -43,11 +43,7 @@ int main(void)
 	pcint_init(PCINT_C, 0b00001111);
 	//
     while (1) 
-    {	 /*
-		volatile uint8_t buttons = 0;
-		buttons = PORT_Read(&BTN_COMMON_PIN_IN); // az összes egy port on van szoval ugyanaz 
-		*/
-		//segment_write_digit(0x01,'a', 0, 1);
+    {	 
 		segment_write_digit(0x01,(uint8_t) (((buttons&0x01) && 0x01)+48), 0, 1);
 		_delay_ms(1);
 		segment_write_digit(0x02,(uint8_t) (((buttons&0x02) && 0x01)+48), 0, 1);
