@@ -1,6 +1,8 @@
 na gomb fejlesztés
 
 	1. defineolni a gomb funkciokat
-	2. interrupt modul? csak go,b nterrupt? 
-			gpio. h ba beletenni a gomb interruptot?
-			callbacket csinalni az interruptnak? 
+		- kész 
+	2. interrupt modul
+			minden interupt callback innen indul
+			callbacket csinalni az interruptnak 
+		

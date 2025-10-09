@@ -125,6 +125,9 @@
     <Compile Include="Inc\gpio.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Inc\interrupt.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Inc\port_config.h">
       <SubType>compile</SubType>
     </Compile>
@@ -135,6 +138,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Src\gpio.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Src\interrupt.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Src\segment_write_digit.c">

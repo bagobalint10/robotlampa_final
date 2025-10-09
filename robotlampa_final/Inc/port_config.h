@@ -59,16 +59,25 @@
 	
 	#define BTN_COMMON_PIN_IN PINC // csak ha az összes gomb  egy porton van 	
 
-//
-/*
-		gomb bekotes:	 (egy port ra a pinchange miatt majd)
+	//
+	/*
+			gomb bekotes:	 (egy port ra a pinchange miatt majd)
 
-						Up 		- 	A0 - PC0 - 0x01 	
-						Down 	- 	A1 - PC1 - 0x02
-						Enter	-	A2 - PC2 - 0x04 
-						Mode 	- 	A3 - PC3 - 0x08
-*/
-//
+							Up 		- 	A0 - PC0 - 0x01 	
+							Down 	- 	A1 - PC1 - 0x02
+							Enter	-	A2 - PC2 - 0x04 
+							Mode 	- 	A3 - PC3 - 0x08
+	*/
+	//
+
+	// interruptok 
+
+	#define PCINT_B 0
+	#define PCINT_C 1
+	#define PCINT_D 2
+
+
+
 
 	// logic
 

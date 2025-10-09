@@ -14,6 +14,11 @@
 #include <util/delay.h>
 
 #include "port_config.h"
+#include "interrupt.h"
+
+void pcint_c_callback(void);
+volatile uint8_t buttons = 0;
+
 
 int main(void)
 {
@@ -32,11 +37,16 @@ int main(void)
 	PORT_Init(&BTN_MODE_DIR,BTN_MODE_PIN,0); // PC3
 	PORT_Write(&BTN_MODE_PORT,BTN_MODE_PIN,1); 
 	//
+
+	// it callback beállítása 
+	set_pcint_Callback(PCINT_C, pcint_c_callback);
+	pcint_init();
+	//
     while (1) 
-    {
+    {	 /*
 		volatile uint8_t buttons = 0;
 		buttons = PORT_Read(&BTN_COMMON_PIN_IN); // az összes egy port on van szoval ugyanaz 
-
+		*/
 		//segment_write_digit(0x01,'a', 0, 1);
 		segment_write_digit(0x01,(uint8_t) (((buttons&0x01) && 0x01)+48), 0, 1);
 		_delay_ms(1);
@@ -47,5 +57,11 @@ int main(void)
 		segment_write_digit(0x08,(uint8_t) (((buttons&0x08) && 0x01)+48), 0, 1);
 		_delay_ms(1);
     }
+}
+
+void pcint_c_callback(void)
+{
+	// interrupt lekezekése 
+	buttons = PORT_Read(&BTN_COMMON_PIN_IN);
 }
 
