@@ -9,4 +9,9 @@ na gomb fejlesztés
 			- most: kitakarítani ezeket a dolgokat:
 				- pcint_init(pcint_c, 0b00000111);
 					az interrupt ba legyen benne 
+	3. Control_board modul csinálás
+		- ebbe tenni a 
+			- gomb kezelés
+			- kijelző kezelés
+			- menü kezelést 
 		
