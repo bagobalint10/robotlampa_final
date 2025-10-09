@@ -9,27 +9,23 @@
 #include "port_config.h"
 #include "stddef.h"
 
+void (*pcint_b_callback_pointer)(void) = NULL;
 void (*pcint_c_callback_pointer)(void) = NULL;
+void (*pcint_d_callback_pointer)(void) = NULL;
 
 
  void set_pcint_Callback(uint8_t port ,void (*Callback_function)(void) )
  {
-		pcint_c_callback_pointer = Callback_function;
-	 /*
+	 
 	switch(port)
 	{
+		case 0 : pcint_b_callback_pointer = Callback_function; break;
 		case 1 : pcint_c_callback_pointer = Callback_function; break;
+		case 2 : pcint_d_callback_pointer = Callback_function; break;
 		default : break;
-	} */
+	} 
  }
- /*
- void ideiglenes_isr(void)
- {
 
-	 
-
-
- } */
 
  void pcint_init(uint8_t port, uint8_t mask)  //pcint init hal 
  {
@@ -51,17 +47,19 @@ void (*pcint_c_callback_pointer)(void) = NULL;
 				PCMSK2 |= PCMSK2_VALID_MASK & mask;		// port B pin mask
 				sei();
 				break;
-	default: break;
-	}
-	
-	  
-					
-	 
+	default:	break;
+	}	 
  }
 
+ ISR(PCINT0_vect)
+ {
+	if(pcint_b_callback_pointer) pcint_b_callback_pointer(); // ha tettünk bele callbacket hívja meg 
+ }
  ISR(PCINT1_vect)
  {
-	 //if(pcint_c_callback_pointer) pcint_c_callback_pointer(); // ha tettünk bele callbacket hívja meg 
-	 pcint_c_callback_pointer();
-
+	if(pcint_c_callback_pointer) pcint_c_callback_pointer(); // ha tettünk bele callbacket hívja meg 
+ }
+ ISR(PCINT2_vect)
+ {
+	if(pcint_d_callback_pointer) pcint_d_callback_pointer(); // ha tettünk bele callbacket hívja meg 
  }
