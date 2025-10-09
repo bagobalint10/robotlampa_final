@@ -81,7 +81,32 @@
 	#define PCMSK1_VALID_MASK  0b00111111  // PC0–PC5
 	#define PCMSK2_VALID_MASK  0xFF        // PD0–PD7
 
+	// timers
 
+	#define TIMER0 0
+	#define TIMER1 1
+	#define TIMER2 2
+
+	//	timer config paraméterek, van még mit fejleszteni- bõvíteni rajtuk --> v0
+
+	// Timer0 módok (TCCR0A értékek)
+	#define TIMER0_NORMAL        0x00						// WGM01:0 = 00
+	#define TIMER0_PWM_PC        (1<<WGM00)					// Phase Correct PWM, WGM01:0 = 01
+	#define TIMER0_CTC           (1<<WGM01)					// CTC, WGM01:0 = 10
+	#define TIMER0_PWM_FAST      ((1<<WGM01)|(1<<WGM00))	// Fast PWM, WGM01:0 = 11
+
+	// Prescaler beállítások (TCCR0B CS02:0 értékek)
+	#define TIMER0_NO_CLK        0x00
+	#define TIMER0_PRESCALE_1    (1<<CS00)
+	#define TIMER0_PRESCALE_8    (1<<CS01)
+	#define TIMER0_PRESCALE_64   ((1<<CS01)|(1<<CS00))
+	#define TIMER0_PRESCALE_256  (1<<CS02)
+	#define TIMER0_PRESCALE_1024 ((1<<CS02)|(1<<CS00))
+
+	// Interrupt típusok
+	#define TIMER0_INT_NONE      0
+	#define TIMER0_INT_OVF       (1<<TOIE0)
+	#define TIMER0_INT_COMP      (1<<OCIE0A)
 
 
 	// logic

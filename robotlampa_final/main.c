@@ -19,6 +19,9 @@
 void pcint_c_callback(void);
 volatile uint8_t buttons = 0;
 
+#include "timer.h"
+static int villog = 0;
+
 
 int main(void)
 {
@@ -42,8 +45,15 @@ int main(void)
 	set_pcint_Callback(PCINT_C, pcint_c_callback);
 	pcint_init(PCINT_C, 0b00001111);
 	//
+
+	//timer interrupt
+	timer_setup(TIMER0, TIMER0_NORMAL, TIMER0_PRESCALE_1024, TIMER0_INT_OVF);
+
+	//
     while (1) 
     {	 
+
+		/*
 		segment_write_digit(0x01,(uint8_t) (((buttons&0x01) && 0x01)+48), 0, 1);
 		_delay_ms(1);
 		segment_write_digit(0x02,(uint8_t) (((buttons&0x02) && 0x01)+48), 0, 1);
@@ -52,6 +62,7 @@ int main(void)
 		_delay_ms(1);
 		segment_write_digit(0x08,(uint8_t) (((buttons&0x08) && 0x01)+48), 0, 1);
 		_delay_ms(1);
+		*/
     }
 }
 
@@ -61,3 +72,13 @@ void pcint_c_callback(void)
 	buttons = PORT_Read(&BTN_COMMON_PIN_IN);
 }
 
+ISR(TIMER0_OVF_vect)
+{
+	
+
+	static unsigned int overflow = 0;
+	overflow++;
+	if(!(overflow%60))	villog = !villog;
+	segment_write_digit(0x01,'a',0,villog);
+	
+}
