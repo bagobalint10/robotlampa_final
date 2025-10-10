@@ -12,8 +12,8 @@
 
 	#include <avr/io.h>
 
-	void control_board_tmp(void);
-	void control_board_init_tmp(void);
+	void control_board_main(void);
+	void control_board_init(void);
 	uint32_t millis(void);
 
 

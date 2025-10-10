@@ -6,6 +6,7 @@
  */ 
 
  #include "buttons.h"
+
  #include "port_config.h"
  #include "interrupt.h"
  #include "gpio.h"
@@ -13,19 +14,13 @@
  #include "timer.h"
 
 
+ static volatile uint8_t buttons = 0;	// direktbe beolvasott gomb értékek
+ static uint8_t db_time = 0;			// debounce time
 
-
-
-
- // ideiglnes 
-
- static volatile uint8_t buttons = 0;
- static uint8_t db_time = 0;
-
- uint8_t *button_0_p = NULL;
- uint8_t *button_1_p = NULL;
- uint8_t *button_2_p = NULL;
- uint8_t *button_3_p = NULL;
+ static uint8_t *button_0_p = NULL;
+ static uint8_t *button_1_p = NULL;
+ static uint8_t *button_2_p = NULL;
+ static uint8_t *button_3_p = NULL;
 
  // private 
 
@@ -33,8 +28,6 @@
  {
 	buttons = PORT_Read(&BTN_COMMON_PIN_IN);	//C port beolvasás	--> diregt beolvasott dolog
  }
-
-
 
  // public 
 
@@ -72,30 +65,21 @@
 
  void button_read(void)
  {
-	// pergés mentesítés 
-	// --maszkolás 
-	// --pointerbe beletevés 
-	static uint32_t current_time = 0;
+	static uint32_t current_time = 0;	  // pergés mentesítéshez változók
 	static uint32_t prev_time = 0;
 	static uint16_t interval_time = 0;
 
 	current_time = millis();
-	interval_time = db_time; 
+	interval_time = db_time;	//devounce time beállítása 
 
 	if ((uint32_t)(current_time - prev_time)>= interval_time)  //pergés mentesítés
 	{
 		prev_time = current_time;
 
-		*button_0_p = ((buttons & 0x01) && 0x01); //maszkolás + 0-1 konverzió
+		*button_0_p = ((buttons & 0x01) && 0x01);	//pointereknek gomb értékének átadása
 		*button_1_p = ((buttons & 0x02) && 0x01);
 		*button_2_p = ((buttons & 0x04) && 0x01);
 		*button_3_p = ((buttons & 0x08) && 0x01);
 		
 		} 
-
-
-	///
-
-	
-
  }
