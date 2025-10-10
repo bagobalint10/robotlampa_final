@@ -12,7 +12,8 @@
 		#include <avr/io.h>
 		#include <avr/interrupt.h>
 
-		void timer_setup(uint8_t timer, uint8_t mode, uint8_t prescaler, uint8_t interrupt_type);
+		void timer_init(uint8_t timer, uint8_t mode, uint8_t prescaler);
+		void timer_set_value(uint8_t timer, uint8_t value);
 		
 
 

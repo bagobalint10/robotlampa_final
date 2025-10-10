@@ -106,7 +106,7 @@
 	// Interrupt típusok
 	#define TIMER0_INT_NONE      0
 	#define TIMER0_INT_OVF       (1<<TOIE0)
-	#define TIMER0_INT_COMP      (1<<OCIE0A)
+	#define TIMER0_INT_COMP_A    (1<<OCIE0A)
 
 
 	// logic

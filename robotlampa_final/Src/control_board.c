@@ -13,6 +13,7 @@
  #include "segment_write_digit.h"
  #include "port_config.h"
  #include "interrupt.h"
+ #include "timer.h"
  #define F_CPU 16000000UL
  #include <util/delay.h>
  //
@@ -21,6 +22,11 @@
  // gomb olvasás változó
  volatile uint8_t buttons = 0;
  //
+ static void timer_0_callback(void);
+ static int villog = 0;	 // ideiglenes 
+
+
+
 
  // private függvények 
 
@@ -52,6 +58,26 @@
 	 pcint_init(PCINT_C, 0b00001111);					// C portra enable , maszkolás 4 gombra 
  } 
 
+ static void timers_init()
+ {
+	timer_init(TIMER0, TIMER0_CTC, TIMER0_PRESCALE_64);
+	timer_int_init(TIMER0, TIMER0_INT_COMP_A);
+	timer_set_value(TIMER0, 249);							// 1ms idõzítés (sys thick)
+	set_timer_int_Callback(TIMER0,timer_0_callback);
+ }
+
+static void timer_0_callback(void)
+ {
+	 static unsigned int i = 0;
+	 i++;
+
+	 if (i >= 1000)
+	 {
+		 villog ^= 0x01;
+		 i = 0;
+	 }	 	 
+ }
+
 
 
  // public függvények 
@@ -60,6 +86,7 @@
  {
 	segment_Init();
 	buttons_init();	
+	timers_init();
  }
 
 
@@ -67,8 +94,7 @@
 
  void control_board_tmp(void) // ideiglenes sketchi verzio
  {
-
-
+		 segment_write_digit(0x01,'d', 0, villog);
  }
 
 
