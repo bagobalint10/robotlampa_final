@@ -64,12 +64,11 @@
  }
 
  void button_read(void)
- {
-	static uint32_t current_time = 0;	  // pergés mentesítéshez változók
-	static uint32_t prev_time = 0;
+ {	  
+	static uint32_t prev_time = 0;		// pergés mentesítéshez változók
 	static uint16_t interval_time = 0;
 
-	current_time = millis();
+	uint32_t current_time = millis();
 	interval_time = db_time;	//devounce time beállítása 
 
 	if ((uint32_t)(current_time - prev_time)>= interval_time)  //pergés mentesítés

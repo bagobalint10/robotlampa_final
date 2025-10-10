@@ -9,8 +9,10 @@
 #ifndef LCD_DRIVER_H_
 #define LCD_DRIVER_H_
 
+	#include <avr/io.h>
 
-
+	void lcd_write_buffer(uint8_t *lcd_buffer); 
+	void lcd_init(uint8_t mux_time);
 
 
 #endif /* LCD_DRIVER_H_ */
