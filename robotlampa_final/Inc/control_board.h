@@ -10,6 +10,9 @@
 #define CONTROL_BOARD_H_
 
 
+	#include <avr/io.h>
+
+	void control_board_tmp(void);
 
 
 
