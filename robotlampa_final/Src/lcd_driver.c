@@ -22,7 +22,7 @@
 	interval_time = mux_time;
  }
 
- void lcd_write_buffer(uint8_t *lcd_buffer)	 // 4 byteos buffer kiiratása (részletenként) --> intervallumonként 
+ void lcd_write_buffer(uint8_t *lcd_buffer,uint8_t *lcd_dot_buffer,uint8_t lcd_enable) 	 // 4 byteos buffer kiiratása (részletenként) --> intervallumonként 
  {  
 	static uint32_t prev_time = 0;
 	static uint8_t n = 0;
@@ -32,7 +32,7 @@
 	if ((uint32_t)(current_time - prev_time)>= interval_time)  // idõzítés
 	{
 		prev_time = current_time;
-		segment_write_digit((0x01 << n),*((lcd_buffer+3)-n), 0, 1); // digit sorrend invertálás 
+		segment_write_digit((0x01 << n),*((lcd_buffer+3)-n),*((lcd_dot_buffer+3)-n), lcd_enable); // digit sorrend invertálás 
 
 		n++;
 		if (n >= 4) n = 0;

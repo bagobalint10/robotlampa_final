@@ -21,6 +21,9 @@
   //lcd változók
 
   static uint8_t lcd_buffer[4] = "abcd";
+  static uint8_t lcd_dot_buffer[4] = {1,1,0,0};
+  static uint8_t lcd_enable = 1;
+  
  // private függvények 
 
  // public függvények 
@@ -36,7 +39,7 @@
  {
 	button_read(); // kiolvasás
 	//menü	--> bufferbe string beiras / gomb olvasás
-	lcd_write_buffer(lcd_buffer);	 // 5x4 = 20ms refresh time  
+	lcd_write_buffer(lcd_buffer,lcd_dot_buffer,lcd_enable);	 // 5x4 = 20ms refresh time  
 
  }
 
