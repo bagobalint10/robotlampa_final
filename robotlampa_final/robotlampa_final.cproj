@@ -122,6 +122,9 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Inc\buttons.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Inc\control_board.h">
       <SubType>compile</SubType>
     </Compile>
@@ -144,6 +147,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="main.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Src\buttons.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Src\control_board.c">

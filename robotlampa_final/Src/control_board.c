@@ -7,12 +7,15 @@
 
  #include "control_board.h"
 
+  #include "segment_write_digit.h"
+  #include "buttons.h"
+
  ///// ideiglenes  - gomb olvasás + segment write 
 
- #include "gpio.h"
- #include "segment_write_digit.h"
- #include "port_config.h"
- #include "interrupt.h"
+ //#include "gpio.h"
+
+ //#include "port_config.h"
+ //#include "interrupt.h"
  #include "timer.h"
  #define F_CPU 16000000UL
  #include <util/delay.h>
@@ -27,33 +30,7 @@
 
  // private függvények 
 
-  static void pcint_c_callback(void)			// pcint_C lekezekése
-  {
-	  buttons = PORT_Read(&BTN_COMMON_PIN_IN);	//C port beolvasás
-  }
 
-
- static void buttons_init(void)
- {
-	 // gomb pinek bemenet + pullup  - init
-
-	 PORT_Init(&BTN_UP_DIR,BTN_UP_PIN,0);		// PC0 - input
-	 PORT_Write(&BTN_UP_PORT,BTN_UP_PIN,1);		// P0 - pull up
-
-	 PORT_Init(&BTN_DOWN_DIR,BTN_DOWN_PIN,0);	// PC1
-	 PORT_Write(&BTN_DOWN_PORT,BTN_DOWN_PIN,1);
-
-	 PORT_Init(&BTN_ENTER_DIR,BTN_ENTER_PIN,0); // PC2
-	 PORT_Write(&BTN_UP_PORT,BTN_ENTER_PIN,1);
-
-	 PORT_Init(&BTN_MODE_DIR,BTN_MODE_PIN,0);	// PC3
-	 PORT_Write(&BTN_MODE_PORT,BTN_MODE_PIN,1);
-
-	 // pcint  callback beállítása gombokra
-
-	 set_pcint_Callback(PCINT_C, pcint_c_callback);		// Callback fgv. beállítása 
-	 pcint_init(PCINT_C, 0b00001111);					// C portra enable , maszkolás 4 gombra 
- } 
 
  // public függvények 
 
@@ -65,8 +42,12 @@
 
  void control_board_tmp(void) // ideiglenes sketchi verzio
  {
-		 segment_write_digit(0x01,'d', 0, villog);
+		 //segment_write_digit(0x01,'d', 0, villog);
+		 #define TEST_BUTTONS buttons
+		 
+		 segment_write_digit(0x01,(uint8_t) (((TEST_BUTTONS&0x01) && 0x01)+48), 0, villog);
  }
+
 
 
 

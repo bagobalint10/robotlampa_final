@@ -9,6 +9,10 @@
 #ifndef BUTTONS_H_
 #define BUTTONS_H_
 
+	#include <avr/io.h>
+
+	void buttons_init(void);
+
 
 
 
