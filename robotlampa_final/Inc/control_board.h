@@ -14,6 +14,7 @@
 
 	void control_board_tmp(void);
 	void control_board_init_tmp(void);
+	uint32_t millis(void);
 
 
 

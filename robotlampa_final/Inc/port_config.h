@@ -114,6 +114,9 @@
 	#define OUTPUT 1
 	#define INPUT 0
 
+	// globan variables 
+
+
 
 
 #endif /* PORT_CONFIG_H_ */

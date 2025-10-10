@@ -6,9 +6,18 @@
  */ 
 
  #include "timer.h"
+ #include "interrupt.h"
  #include "port_config.h"
 
- void timer_init(uint8_t timer, uint8_t mode, uint8_t prescaler){
+
+  static volatile uint32_t Millis = 0;
+  static void timer_0_callback(void);
+
+
+
+ //// private 
+
+ static void timer_init(uint8_t timer, uint8_t mode, uint8_t prescaler){
 		 
 	 switch (timer)
 	 {
@@ -26,7 +35,7 @@
 	 
  }
 
- void timer_set_value(uint8_t timer, uint8_t value)
+ static void timer_set_value(uint8_t timer, uint8_t value)
  {
 	 switch (timer)
 	 {
@@ -34,3 +43,31 @@
 		 default: break;
 	 }
  }
+
+
+ static void timer_0_callback(void)
+ {
+	 Millis++;
+ }
+
+
+  ///////////////  public 
+
+ void timers_init()
+  {
+	  timer_init(TIMER0, TIMER0_CTC, TIMER0_PRESCALE_64);
+	  timer_int_init(TIMER0, TIMER0_INT_COMP_A);
+	  timer_set_value(TIMER0, 249);							// 1ms idõzítés (sys thick)
+	  set_timer_int_Callback(TIMER0,timer_0_callback);
+  }
+
+ uint32_t millis(void)
+ {
+	 uint32_t m;
+	 cli();				// megszakítás tiltás olvasás idejére --> több órajel kiolvasni 32 bitet
+	 m = Millis;
+	 sei();
+
+	 return m;
+ }
+

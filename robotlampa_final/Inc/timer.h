@@ -11,9 +11,10 @@
 
 		#include <avr/io.h>
 		#include <avr/interrupt.h>
+		
+		uint32_t millis(void);
+		void timers_init(void);
 
-		void timer_init(uint8_t timer, uint8_t mode, uint8_t prescaler);
-		void timer_set_value(uint8_t timer, uint8_t value);
 		
 
 
