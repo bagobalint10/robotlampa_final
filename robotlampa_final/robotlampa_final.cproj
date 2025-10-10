@@ -137,6 +137,9 @@
     <Compile Include="Inc\segment_write_digit.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Inc\test_codes.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Inc\timer.h">
       <SubType>compile</SubType>
     </Compile>

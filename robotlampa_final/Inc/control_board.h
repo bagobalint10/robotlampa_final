@@ -13,6 +13,7 @@
 	#include <avr/io.h>
 
 	void control_board_tmp(void);
+	void control_board_init_tmp(void);
 
 
 
