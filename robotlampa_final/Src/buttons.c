@@ -9,24 +9,47 @@
  #include "port_config.h"
  #include "interrupt.h"
  #include "gpio.h"
+ #include "stddef.h"
+ #include "timer.h"
+
+
+
+
+
 
  // ideiglnes 
 
- extern volatile uint8_t buttons;
+ static volatile uint8_t buttons = 0;
+ static uint8_t db_time = 0;
+
+ uint8_t *button_0_p = NULL;
+ uint8_t *button_1_p = NULL;
+ uint8_t *button_2_p = NULL;
+ uint8_t *button_3_p = NULL;
 
  // private 
 
- static void pcint_c_callback(void)			// pcint_C lekezekése
+ static void pcint_c_callback(void)				// pcint_C lekezekése
  {
-	buttons = PORT_Read(&BTN_COMMON_PIN_IN);	//C port beolvasás
+	buttons = PORT_Read(&BTN_COMMON_PIN_IN);	//C port beolvasás	--> diregt beolvasott dolog
  }
 
 
 
  // public 
 
- void buttons_init(void)
+ void set_buttons_variables(uint8_t *button_0, uint8_t *button_1, uint8_t *button_2, uint8_t *button_3 )
  {
+	button_0_p =  button_0;
+	button_1_p =  button_1;
+	button_2_p =  button_2;
+	button_3_p =  button_3;
+ }
+
+ void buttons_init(uint8_t debounce_time)
+ {
+	db_time = debounce_time;
+
 	// gomb pinek bemenet + pullup  - init
 
 	PORT_Init(&BTN_UP_DIR,BTN_UP_PIN,0);		// PC0 - input
@@ -45,4 +68,34 @@
 
 	set_pcint_Callback(PCINT_C, pcint_c_callback);		// Callback fgv. beállítása
 	pcint_init(PCINT_C, 0b00001111);					// C portra enable , maszkolás 4 gombra
+ }
+
+ void button_read(void)
+ {
+	// pergés mentesítés 
+	// --maszkolás 
+	// --pointerbe beletevés 
+	static uint32_t current_time = 0;
+	static uint32_t prev_time = 0;
+	static uint16_t interval_time = 0;
+
+	current_time = millis();
+	interval_time = db_time; 
+
+	if ((uint32_t)(current_time - prev_time)>= interval_time)  //pergés mentesítés
+	{
+		prev_time = current_time;
+
+		*button_0_p = ((buttons & 0x01) && 0x01); //maszkolás + 0-1 konverzió
+		*button_1_p = ((buttons & 0x02) && 0x01);
+		*button_2_p = ((buttons & 0x04) && 0x01);
+		*button_3_p = ((buttons & 0x08) && 0x01);
+		
+		} 
+
+
+	///
+
+	
+
  }

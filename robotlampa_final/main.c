@@ -9,13 +9,8 @@
 
 #include "control_board.h"
 #include "timer.h"
-//#include "port_config.h"
-//#include "timer.h"
-//#include "port_config.h"
-//#include "interrupt.h"
+
 extern int villog;
-
-
 
 int main(void)
 {
@@ -25,7 +20,7 @@ int main(void)
 
     while (1) 
     {	 
-
+		/*
 		static uint32_t tmp_current_time = 0;
 		tmp_current_time = millis();
 
@@ -36,10 +31,10 @@ int main(void)
 		{
 			tmp_time_0 = tmp_current_time;
 			villog ^= 0x01;
-		}
+		} */
 
 		control_board_tmp();		// ideiglenes 
-		//static uint32_t tmp_ido = 0;
+		
 
 
 
