@@ -39,6 +39,7 @@ static int menu_n = 1;				// 0-3 fõmenü
 static uint8_t sub_menu_f = 0;
 static int sub_menu_n = 0;
 static int dmx_adress = 001;
+static uint8_t dmx_menu_blink = 0;
   	// kimeno
   	// ---lcd_buffer
   	//local
@@ -51,31 +52,21 @@ static int dmx_adress = 001;
 
  void push_string(void)										//--------------------------
  {
-	//bemeno
-		// sub_menu_f
-		// dmx adress
-		// menu_num
-		// sub_menu_num 
-	// kimeno 
-		// lcd_buffer
-	//local
-		//menu_pointer
-		//sub menu string 
-		//menu string
+
  static const char *menu_string[3]=	{	"rst ",
 										"a   ",
 										"lamp" };
 			
  static const char *sub_menu_string[3]=	{	"  on",
-											" off"};
+											" off",
+											"    "};
 
  const char *menu_pointer;	// string_push hoz
-
-
 
 	if(sub_menu_f) menu_pointer = sub_menu_string[sub_menu_n];  		// SUBMENU	KIJELZÉS  
 	else menu_pointer = menu_string[menu_n];							// sima MENU KIJELZÉS
 	if(menu_n == 1) menu_pointer = menu_string[1];						// dmx módba fix!!
+	if((menu_n == 1) && dmx_menu_blink) menu_pointer = sub_menu_string[2];	// dmx módba VILLOG (üres)
 
 	for (int i = 0; i<4; i++)							//str_copy
 	{
@@ -104,10 +95,13 @@ static int dmx_adress = 001;
 	static uint32_t current_time = 0;
 	current_time = millis();
 	static uint32_t prev_time_long = 0;
-	static uint16_t interval_long = 1000;  // hosszú gombnyomás ideje 
+	static uint16_t interval_long = 1000;		// hosszú gombnyomás ideje 
 	
 	static uint32_t prev_time_counter = 0;
 	static uint16_t interval_counter = 50;  	// gyors léptetés sebessége (ideje)
+
+	static uint32_t prev_time_blink = 0;
+	static uint16_t interval_blink = 350;  		// A betu villogás ideje 
 
 	// felfutó él olvasás
 	static uint8_t bt_up_tmp = 1;
@@ -172,10 +166,6 @@ static int dmx_adress = 001;
 	up_long_f = 0;
 	down_long_f = 0;
 	} 
-
-	// test code 
-	//dmx_adress = enter_long_f;
-	//
 	
 	//---------> éldetektálás eddig
 
@@ -194,6 +184,12 @@ static int dmx_adress = 001;
 					if(mode_f) sub_menu_f = 0;	// MODE	 --> kilépés --> menü
 					if(up_f) dmx_adress++;		// UP-DOWN -->  dmx adress
 					if(down_f) dmx_adress--;
+					// A betû villogtatás
+					if ((uint32_t)(current_time - prev_time_blink)>= interval_blink)
+					{
+						prev_time_blink = current_time;
+						dmx_menu_blink ^= 0x01;
+					}
 					// gyors léptetés
 
 					if (up_long_f) //gyors léptetés up 
@@ -219,52 +215,44 @@ static int dmx_adress = 001;
 					if(enter_f) sub_menu_f = 1;	// ENTER  --> belépés --> submenü
 					if(up_f) menu_n--;			// UP-DOWN -->  menu_n
 					if(down_f) menu_n++;
+
+					dmx_menu_blink = 0;
 					
-				}
-				// Overflow guard  
-				if(menu_n < 1) menu_n = 1;	
-				if(menu_n > 2) menu_n = 2;
-
-				if(sub_menu_n < 0) sub_menu_n = 0;	
-				if(sub_menu_n > 1) sub_menu_n = 1;
-
-				// + ADRESS OVERFLOF GUARD
-				if(dmx_adress < 0) dmx_adress = 512;
-				if(dmx_adress > 512) dmx_adress = 0;
-
-				push_string();
-
+				} 
 				break;
 
 	case 2:		// LAMP
 	
-				if(sub_menu_f)  					// SUBMENU
+				if(sub_menu_f)  				// SUBMENU
 				{
 												// ENTER  --> mentés, hoszan
 					if(mode_f) sub_menu_f = 0;	// MODE	 --> kilépés --> menü
 					if(up_f) sub_menu_n--;		// UP-DOWN -->  sub_menu_n,
 					if(down_f) sub_menu_n++;
 				}
-				else								// SIMA MENU
+				else							// SIMA MENU
 				{				
 												// MODE	 --> semmi
 					if(enter_f) sub_menu_f = 1;	// ENTER  --> belépés --> submenü
 					if(up_f) menu_n--;			// UP-DOWN -->  menu_n
 					if(down_f) menu_n++;
 				}
-
-				// overflow guard 
-				if(menu_n < 1) menu_n = 1;	// ÁTTENNI MÁSHOVA
-				if(menu_n > 2) menu_n = 2;
-
-				if(sub_menu_n < 0) sub_menu_n = 0;	// ÁTTENNI MÁSHOVA
-				if(sub_menu_n > 1) sub_menu_n = 1;
-
-				push_string();
-
 				break;
 	default: break;
 	}
+
+	// Overflow guard
+	if(menu_n < 1) menu_n = 1;
+	if(menu_n > 2) menu_n = 2;
+
+	if(sub_menu_n < 0) sub_menu_n = 0;
+	if(sub_menu_n > 1) sub_menu_n = 1;
+
+	// + ADRESS OVERFLOF GUARD
+	if(dmx_adress < 0) dmx_adress = 512;
+	if(dmx_adress > 512) dmx_adress = 0;
+
+	push_string();
  }
  // public függvények 
 
