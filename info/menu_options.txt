@@ -20,8 +20,10 @@ menü:
 	};
 	
 	
-	// elso lepes --> lérehozni egy menüt amibe bírok lépegetni simán (főmenü: rst,a,lamp,run)
+	// elso lepes --> lérehozni egy menüt amibe bírok  lépegetni simán (főmenü: rst,a,lamp,run)
 	// switch ami tudja az adott menü funkcióit 
 	
 	// lcd kiiratásból függvény --> beletenni a switch case ba 
+	
+	// semmi ujjat nemirni azt szétbontani/rendszerezni amit eddig irtam 
 	
