@@ -8,7 +8,6 @@ menü:
 	- lamp 
 		- on 
 		- off
-	- run // képernyő pinetető
 	
 	char *menu[6]=
 	{
@@ -22,5 +21,7 @@ menü:
 	
 	
 	// elso lepes --> lérehozni egy menüt amibe bírok lépegetni simán (főmenü: rst,a,lamp,run)
-	//BUG FIX --> 0. GOMBNYOMÁS KUKA, 0. OLVASÁS INITBE BELE? 
+	// switch ami tudja az adott menü funkcióit 
+	
+	// lcd kiiratásból függvény --> beletenni a switch case ba 
 	
