@@ -25,29 +25,11 @@
   static uint8_t lcd_dot_buffer[4] = {1,1,0,0};
   static uint8_t lcd_enable = 1;
 
-  // dmx adress 
-
-  
-
-  // menu_ststic változók 
-  	//bemeno
-  	// --sub_menu_f
-  	// --dmx adress
-  	// --menu_num
-  	// --sub_menu_num
 static int menu_n = 1;				// 0-3 fõmenü
 static uint8_t sub_menu_f = 0;
 static int sub_menu_n = 0;
 static int dmx_adress = 001;
 static uint8_t dmx_menu_blink = 0;
-  	// kimeno
-  	// ---lcd_buffer
-  	//local
-  	//menu_pointer
-  	//sub menu string
-  	//menu string
-  
- // private függvények 
 
 
  void push_string(void)										//--------------------------
@@ -103,6 +85,9 @@ static uint8_t dmx_menu_blink = 0;
 	static uint32_t prev_time_blink = 0;
 	static uint16_t interval_blink = 350;  		// A betu villogás ideje 
 
+	static uint32_t prev_time_save = 0;
+	static uint16_t interval_save = 100;  		// mentésnél villogás ideje 
+
 	// felfutó él olvasás
 	static uint8_t bt_up_tmp = 1;
 	static uint8_t bt_down_tmp = 1;
@@ -117,6 +102,11 @@ static uint8_t dmx_menu_blink = 0;
 	uint8_t up_long_f = 0;
 	uint8_t down_long_f = 0;
 	uint8_t enter_long_f = 0;
+	//
+	static uint8_t save_f = 0;
+	static uint8_t save_counter = 0;
+	static uint8_t save_once = 0;
+	
 
 	//---------> éldetektálás
 	if(bt_up^bt_up_tmp)	 // él detektálás
@@ -253,6 +243,36 @@ static uint8_t dmx_menu_blink = 0;
 	if(dmx_adress > 512) dmx_adress = 0;
 
 	push_string();
+
+	if (sub_menu_f && enter_long_f)	   // submenübe van + enter long lenyomva  --> set save_f
+	{ 
+		save_f = 1;
+	}
+
+	if(save_f && !save_once)  // 1x fut le 
+	{
+		save_once = 1;
+		//eeprom_save();	// ez egyszer fusson csak le
+
+	}
+	if (save_f && (save_counter < 10))	  // save counter csak 5x engedi lefutni
+	{
+		// villogtasson 5 x, 6diknál -> save_blink = 0
+		if ((uint32_t)(current_time - prev_time_save)>= interval_save)
+		{
+			prev_time_save = current_time;
+			lcd_enable ^= 0x01;
+			save_counter++;
+		}
+	}else lcd_enable = 1;
+
+	if (bt_enter)	// ha az enter felvan engedve 
+	{
+		//reset flags
+		save_counter = 0; 
+		save_f = 0;
+		save_once = 0;
+	}
  }
  // public függvények 
 
