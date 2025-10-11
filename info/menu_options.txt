@@ -1,0 +1,22 @@
+
+
+menü: 
+
+	- rst 
+	- dmx adress
+		- change dmx adress 
+	- lamp 
+		- on 
+		- off
+	- run // képernyő pinetető
+	
+	char *menu[6]=
+	{
+		"rst ",
+		"a   ",
+		"lamp",
+		"run ",
+		"on  ",
+		"off "
+	};
+	
