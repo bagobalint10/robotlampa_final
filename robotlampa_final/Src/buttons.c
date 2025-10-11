@@ -61,6 +61,8 @@
 
 	set_pcint_Callback(PCINT_C, pcint_c_callback);		// Callback fgv. beállítása
 	pcint_init(PCINT_C, 0b00001111);					// C portra enable , maszkolás 4 gombra
+
+	buttons = PORT_Read(&BTN_COMMON_PIN_IN); // 0. olvasás
  }
 
  void button_read(void)
