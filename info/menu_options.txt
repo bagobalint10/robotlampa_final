@@ -20,3 +20,7 @@ menü:
 		"off "
 	};
 	
+	
+	// elso lepes --> lérehozni egy menüt amibe bírok lépegetni simán (főmenü: rst,a,lamp,run)
+	//BUG FIX --> 0. GOMBNYOMÁS KUKA, 0. OLVASÁS INITBE BELE? 
+	
