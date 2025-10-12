@@ -27,3 +27,8 @@ menü:
 	
 	// semmi ujjat nemirni azt szétbontani/rendszerezni amit eddig irtam 
 	
+	--> jobbra ballra fut(heat)
+	--> heat timer 
+	--> relé kapcsolás, lámpa on off alapján
+	--> eeprom_mentés
+	

@@ -22,7 +22,7 @@
   //lcd változók
 
   static uint8_t lcd_buffer[4] = "abcd";
-  static uint8_t lcd_dot_buffer[4] = {1,1,0,0};
+  static uint8_t lcd_dot_buffer[4] = {0,0,0,0};
   static uint8_t lcd_enable = 1;
 
 static int menu_n = 1;				// 0-3 fõmenü
@@ -30,6 +30,7 @@ static uint8_t sub_menu_f = 0;
 static int sub_menu_n = 0;
 static int dmx_adress = 001;
 static uint8_t dmx_menu_blink = 0;
+static uint8_t heat = 0;
 
 
  void push_string(void)										//--------------------------
@@ -88,6 +89,12 @@ static uint8_t dmx_menu_blink = 0;
 	static uint32_t prev_time_save = 0;
 	static uint16_t interval_save = 100;  		// mentésnél villogás ideje 
 
+	static uint32_t prev_time_heat_blink = 0;
+	static uint16_t interval_heat_blink = 100;  // heat dots animacio
+
+	static uint8_t heat_dots = 0x02;
+	static uint8_t heat_dots_dir = 0x01; 
+
 	// felfutó él olvasás
 	static uint8_t bt_up_tmp = 1;
 	static uint8_t bt_down_tmp = 1;
@@ -106,6 +113,7 @@ static uint8_t dmx_menu_blink = 0;
 	static uint8_t save_f = 0;
 	static uint8_t save_counter = 0;
 	static uint8_t save_once = 0;
+	static uint8_t clear_once = 0;
 	
 
 	//---------> éldetektálás
@@ -244,6 +252,8 @@ static uint8_t dmx_menu_blink = 0;
 
 	push_string();
 
+	//save_enter
+
 	if (sub_menu_f && enter_long_f)	   // submenübe van + enter long lenyomva  --> set save_f
 	{ 
 		save_f = 1;
@@ -273,6 +283,37 @@ static uint8_t dmx_menu_blink = 0;
 		save_f = 0;
 		save_once = 0;
 	}
+	//// save enter eddig 
+
+	// heat animation
+
+	// if heat --> ide-oda fut
+	if (heat)	  // save counter csak 5x engedi lefutni
+	{
+		// villogtasson 5 x, 6diknál -> save_blink = 0
+		if ((uint32_t)(current_time - prev_time_heat_blink)>= interval_heat_blink)
+		{
+			prev_time_heat_blink = current_time;
+			if(heat_dots==0x01 || heat_dots == 0x08) heat_dots_dir ^= 0x01;
+			if(heat_dots_dir) heat_dots = (heat_dots<<1);
+			else heat_dots = (heat_dots>>1);
+			
+		}
+		for (int i = 0; i<4;i++)
+		{
+			lcd_dot_buffer[i] = (heat_dots&(0x01<<i))&&0x01;
+		}
+		clear_once = 1;
+	}else if(clear_once)   //clear all flag; 
+	{
+		clear_once = 0;
+		for (int i = 0; i<4;i++)
+		{
+			lcd_dot_buffer[i] = 0x00;
+		}
+	}
+
+	//
  }
  // public függvények 
 
@@ -288,7 +329,6 @@ static uint8_t dmx_menu_blink = 0;
 	button_read(); // kiolvasás
 	menu();	 // gomb -->  string , dot, enable
 	lcd_write_buffer(lcd_buffer,lcd_dot_buffer,lcd_enable);	  
-
  }
 
 
