@@ -1,0 +1,4 @@
+
+
+-- control board elkülönítése 
+-- dmx olvasás + írás külön modulban hozzáadni 
