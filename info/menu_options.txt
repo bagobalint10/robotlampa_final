@@ -27,8 +27,17 @@ menü:
 	
 	// semmi ujjat nemirni azt szétbontani/rendszerezni amit eddig irtam 
 	
-	--> jobbra ballra fut(heat)
-	--> heat timer 
-	--> relé kapcsolás, lámpa on off alapján
-	--> eeprom_mentés
+		--> jobbra ballra fut(heat)
+	    --> heat timer 
+	    --> relé kapcsolás, lámpa on off alapján
+		--> eeprom_mentés
+		/////
 	
+		//--> dmx adress mentés 								// adress 
+		--> lámpa bekapcsolásnál 								// lamp_f
+		--> kikapcsolás/bekapcsolás után letelt idő után 		// lamp_f
+		
+		///loadolás : indításnál?
+		
+		
+		// program többi részének milyen változókat kell továbbadni?

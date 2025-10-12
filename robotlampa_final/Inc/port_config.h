@@ -114,6 +114,16 @@
 	#define OUTPUT 1
 	#define INPUT 0
 
+	// eeprom adresses
+	#define EEPR_ADR_LAMP 0x01
+	#define EEPR_ADR_DMX_ARD_0 0x02
+	#define EEPR_ADR_DMX_ADR_1 0x03
+
+	// relé 
+	#define RELAY_PORT PORTB		// --> 9 LÁB -- PB1
+	#define RELAY_PIN PORTB1
+	#define RELAY_DIR DDRB
+
 	// globan variables 
 
 

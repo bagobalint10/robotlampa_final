@@ -19,7 +19,7 @@ int main(void)
     while (1) 
     {	 
 
-		control_board_main();		
+		control_board_main(); // menü,cím,lcd,relé kezelés		
 	
     }
 }

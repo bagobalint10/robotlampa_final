@@ -10,7 +10,16 @@
  #include "buttons.h"
  #include "timer.h"
  #include "lcd_driver.h"
+ #include "eepromh.h"
+ #include "port_config.h"
+ #include "relay.h"
 
+ //globális változók
+ uint8_t *dmx_adress_pointer;
+ uint8_t tmp_dmx_array[512];
+ //
+
+ static int dmx_adress = 0x01;
 
   // gomb változók 
 
@@ -28,9 +37,11 @@
 static int menu_n = 1;				// 0-3 fõmenü
 static uint8_t sub_menu_f = 0;
 static int sub_menu_n = 0;
-static int dmx_adress = 001;
+
 static uint8_t dmx_menu_blink = 0;
-static uint8_t heat = 0;
+/////
+static uint8_t lamp_cold_f = 0;  // 0-nem --> heat = lamp_wait , 1 igen, (szabad e indítani) 
+static uint8_t lamp_count = 0;
 
 
  void push_string(void)										//--------------------------
@@ -92,6 +103,10 @@ static uint8_t heat = 0;
 	static uint32_t prev_time_heat_blink = 0;
 	static uint16_t interval_heat_blink = 100;  // heat dots animacio
 
+	static uint32_t prev_time_lamp_cold = 0;
+	static uint32_t interval_lamp_cold = 300000;  // kihûlési idõ 5 perc  5*60 *1000
+
+
 	static uint8_t heat_dots = 0x02;
 	static uint8_t heat_dots_dir = 0x01; 
 
@@ -114,6 +129,8 @@ static uint8_t heat = 0;
 	static uint8_t save_counter = 0;
 	static uint8_t save_once = 0;
 	static uint8_t clear_once = 0;
+	static uint8_t lamp_on_f = 0;
+	
 	
 
 	//---------> éldetektálás
@@ -247,8 +264,8 @@ static uint8_t heat = 0;
 	if(sub_menu_n > 1) sub_menu_n = 1;
 
 	// + ADRESS OVERFLOF GUARD
-	if(dmx_adress < 0) dmx_adress = 512;
-	if(dmx_adress > 512) dmx_adress = 0;
+	if(dmx_adress < 1) dmx_adress = 400;
+	if(dmx_adress > 400) dmx_adress = 1;
 
 	push_string();
 
@@ -262,7 +279,23 @@ static uint8_t heat = 0;
 	if(save_f && !save_once)  // 1x fut le 
 	{
 		save_once = 1;
-		//eeprom_save();	// ez egyszer fusson csak le
+		
+
+		// relé set 
+		// relé reset 
+		if(menu_n == 2)			// lámpa save
+		{
+			if(sub_menu_n == 0) lamp_on_f = 1;		//on 
+			else if (sub_menu_n == 1) lamp_on_f = 0;//off
+
+		}else if(menu_n == 1)	//adress save 
+		{
+			eeprom_write_byte(EEPR_ADR_DMX_ARD_0, (uint8_t)dmx_adress);				// csak dmx adress mentése
+			eeprom_write_byte(EEPR_ADR_DMX_ADR_1, (uint8_t)(dmx_adress >> 8));		// lamp mentés majd be kapcsolásnál
+
+			// DMX ADRESST ITT LEHET GLOBÁLIS VÁLTOZÓBA BETÖLTENI !!! 
+			dmx_adress_pointer = (tmp_dmx_array+(dmx_adress-1));
+		}
 
 	}
 	if (save_f && (save_counter < 10))	  // save counter csak 5x engedi lefutni
@@ -288,7 +321,8 @@ static uint8_t heat = 0;
 	// heat animation
 
 	// if heat --> ide-oda fut
-	if (heat)	  // save counter csak 5x engedi lefutni
+	//if (heat)	  // save counter csak 5x engedi lefutni
+	if(lamp_on_f && lamp_count)
 	{
 		// villogtasson 5 x, 6diknál -> save_blink = 0
 		if ((uint32_t)(current_time - prev_time_heat_blink)>= interval_heat_blink)
@@ -313,8 +347,52 @@ static uint8_t heat = 0;
 		}
 	}
 
+
+
+	/// relé idõ,eeprom, kiiratás kezelés
+	if (lamp_on_f && lamp_cold_f)	  // bekapcsolva és kihûlt  
+	{
+		lamp_cold_f = 0;	// set 
+		relay_set();		// set 
+		eeprom_write_byte(EEPR_ADR_LAMP, lamp_cold_f);
+
+		for (int i = 0; i<4;i++)
+		{
+			lcd_dot_buffer[i] = 0x01;
+		}
+
+	}else if (!lamp_on_f && !lamp_cold_f && !lamp_count)  // kikapcsoljuk és még meleg,
+	{ 
+		relay_reset(); // ezt csa egyszer kéne 
+		// számlálás indítása  	 --> ha letelt set lamp_cold f
+		prev_time_lamp_cold = current_time;
+		lamp_count = 1;
+		for (int i = 0; i<4;i++)
+		{
+			lcd_dot_buffer[i] = 0x00;
+		}
+	}
+
+	if (lamp_count) // lámpa idõzítés 
+	{
+		if ((uint32_t)(current_time - prev_time_lamp_cold)>= interval_lamp_cold)
+		{
+			// reset lamp count 
+			// eeprom reset 
+			// lamp cold 
+			lamp_cold_f = 1;
+			eeprom_write_byte(EEPR_ADR_LAMP, lamp_cold_f);
+			lamp_count = 0;
+
+			
+		}
+	}
+
+	//
+	  
 	//
  }
+
  // public függvények 
 
  void control_board_init(void)
@@ -322,16 +400,23 @@ static uint8_t heat = 0;
 	buttons_init(10); //debounce time in ms
 	set_buttons_variables(&bt_up, &bt_down, &bt_enter, &bt_mode);
 	lcd_init(4);	// 4x4 = 16ms refresh time 
+	relay_init();
+
+	// eeprom kiolvasás
+	lamp_cold_f = eeprom_read_byte(EEPR_ADR_LAMP);
+	dmx_adress = eeprom_read_byte(EEPR_ADR_DMX_ARD_0);
+	dmx_adress |= (eeprom_read_byte(EEPR_ADR_DMX_ADR_1)<<8);
+
+	dmx_adress_pointer = (tmp_dmx_array+(dmx_adress-1));
+
  }
 
  void control_board_main(void) // ideiglenes sketchi verzio
  {
 	button_read(); // kiolvasás
 	menu();	 // gomb -->  string , dot, enable
-	lcd_write_buffer(lcd_buffer,lcd_dot_buffer,lcd_enable);	  
+	lcd_write_buffer(lcd_buffer,lcd_dot_buffer,lcd_enable);	
  }
-
-
-
+   
 
 
