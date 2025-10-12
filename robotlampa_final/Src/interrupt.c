@@ -17,6 +17,8 @@ static void (*pcint_d_callback_pointer)(void) = NULL;
 static void (*timer_0_callback_pointer)(void) = NULL;
 static void (*timer_1_callback_pointer)(void) = NULL;
 static void (*timer_2_callback_pointer)(void) = NULL;
+// USART int pointers 
+static void (*usart_rx_callback_pointer)(void) = NULL;
 
 
  void set_pcint_Callback(uint8_t port ,void (*Callback_function)(void) )
@@ -111,4 +113,21 @@ void timer_int_init(uint8_t timer, uint8_t interrupt_type)  //pcint init hal
  ISR(TIMER0_OVF_vect)
  {
 	if(timer_0_callback_pointer) timer_0_callback_pointer(); // ha tettünk bele callbacket hívja meg
+ }
+
+ // usart 
+
+ void set_usart_int_Callback(uint8_t type ,void (*Callback_function)(void) )
+ {
+		switch(type)
+		{
+			case 0 : usart_rx_callback_pointer = Callback_function; break;
+			//case 1 : timer_1_callback_pointer = Callback_function; break;
+			default : break;
+		}
+ }
+
+ ISR(USART_RX_vect)
+ {
+	if(usart_rx_callback_pointer) usart_rx_callback_pointer(); // ha tettünk bele callbacket hívja meg	
  }

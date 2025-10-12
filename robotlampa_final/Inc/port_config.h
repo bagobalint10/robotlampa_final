@@ -124,7 +124,19 @@
 	#define RELAY_PIN PORTB1
 	#define RELAY_DIR DDRB
 
-	// globan variables 
+	// globan variables    
+
+	 //globális változók
+	 extern uint8_t *dmx_adress_pointer;
+	 extern uint8_t dmx_array[512];
+
+	 // dmx config változók 
+
+	 #define DMX_RESET_TIME 15	
+	 #define DMX_SEND_TIME 5
+	 #define DMX_START_ADRESS 0
+	 #define DMX_MAX_ADRESS 15
+	 
 
 
 

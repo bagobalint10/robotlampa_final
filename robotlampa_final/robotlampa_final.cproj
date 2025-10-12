@@ -128,6 +128,9 @@
     <Compile Include="Inc\control_board.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Inc\dmx_usart.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Inc\eepromh.h">
       <SubType>compile</SubType>
     </Compile>
@@ -162,6 +165,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Src\control_board.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Src\dmx_usart.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Src\eeprom.c">

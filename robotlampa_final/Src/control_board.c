@@ -16,7 +16,7 @@
 
  //globális változók
  uint8_t *dmx_adress_pointer;
- uint8_t tmp_dmx_array[512];
+ uint8_t dmx_array[512];
  //
 
  static int dmx_adress = 0x01;
@@ -294,7 +294,7 @@ static uint8_t lamp_count = 0;
 			eeprom_write_byte(EEPR_ADR_DMX_ADR_1, (uint8_t)(dmx_adress >> 8));		// lamp mentés majd be kapcsolásnál
 
 			// DMX ADRESST ITT LEHET GLOBÁLIS VÁLTOZÓBA BETÖLTENI !!! 
-			dmx_adress_pointer = (tmp_dmx_array+(dmx_adress-1));
+			dmx_adress_pointer = (dmx_array+(dmx_adress-1)+2);
 		}
 
 	}
@@ -407,7 +407,7 @@ static uint8_t lamp_count = 0;
 	dmx_adress = eeprom_read_byte(EEPR_ADR_DMX_ARD_0);
 	dmx_adress |= (eeprom_read_byte(EEPR_ADR_DMX_ADR_1)<<8);
 
-	dmx_adress_pointer = (tmp_dmx_array+(dmx_adress-1));
+	dmx_adress_pointer = (dmx_array+(dmx_adress-1)+2);
 
  }
 
