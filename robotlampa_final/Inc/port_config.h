@@ -139,8 +139,8 @@
 
 	 // motor speed control 
 
-	 #define ARRAY_ELEMENT 10 
-	 #define ARRAY_ELEMENT_1 9
+	 #define ARRAY_ELEMENT 300 
+	 #define ARRAY_ELEMENT_1 300
 
 	 #define MOTOR_DIR_PORT PORTC      //A5 - PC5
 	 #define MOTOR_DIR_PIN PORTC5
