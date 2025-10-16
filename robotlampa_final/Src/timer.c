@@ -55,10 +55,12 @@
 
  void timers_init()
   {
-	  timer_init(TIMER0, TIMER0_CTC, TIMER0_PRESCALE_64);
-	  timer_int_init(TIMER0, TIMER0_INT_COMP_A);
-	  timer_set_value(TIMER0, 249);							// 1ms idõzítés (sys thick)
-	  set_timer_int_Callback(TIMER0,timer_0_callback);
+
+	//sys tick 	
+	timer_init(TIMER0, TIMER0_CTC, TIMER0_PRESCALE_64);
+	timer_int_init(TIMER0, TIMER0_INT_COMP_A);
+	timer_set_value(TIMER0, 249);							// 1ms idõzítés (sys tick)
+	set_timer_int_Callback(TIMER0,timer_0_callback);
   }
 
  uint32_t millis(void)

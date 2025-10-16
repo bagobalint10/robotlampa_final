@@ -1,0 +1,24 @@
+
+feladatok: 
+	- sima pwm frekvencia változtató modul megcsinálása 
+	- tesztelése 
+		- interrupt, timer configok, interrupt callback 
+		
+		számok fél fordulathoz : 
+			0x52
+			0x2b
+			0x00
+			vagy 
+			0x8a
+			ax2b 
+			
+			--> nagyjából 11200 fél fordulat !!!! jumper nélkül 1/16 , jó lenne 1/32 
+			--fél kör max sebesség idők: 0,6 mp jó , 0,8-1mp közepes 1,2mp kicsit lassú 
+			
+			--> régi program elemzése 
+				- tim1 -> 8 prescale ctc mode ocr1a 12  = 6,5us , 153khz 
+				
+				
+				sqrt(0.006) * 245 = max_speed_interval = 18 ciklus  = 18*6,5us ===> 117us  8,5khz 
+				-- tehát a motor léptetés max sebessége : 117us , 8,5 khz 
+				-- a timer interrupt pedig : 6,5 us, 153khz 

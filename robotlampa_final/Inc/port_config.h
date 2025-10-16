@@ -136,6 +136,25 @@
 	 #define DMX_SEND_TIME 5
 	 #define DMX_START_ADRESS 0
 	 #define DMX_MAX_ADRESS 15
+
+	 // motor speed control 
+
+	 #define ARRAY_ELEMENT 10 
+	 #define ARRAY_ELEMENT_1 9
+
+	 #define MOTOR_DIR_PORT PORTC      //A5 - PC5
+	 #define MOTOR_DIR_PIN PORTC5
+	 #define MOTOR_DIR_DIR DDRC
+
+	 #define TMP_PORT PORTC     //A5 - PC5
+	 #define TMP_PIN PORTC4
+	 #define TMP_DIR DDRC
+
+	 #define TIM_COMPARE 10
+
+
+
+	  
 	 
 
 

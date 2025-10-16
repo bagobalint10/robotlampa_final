@@ -408,6 +408,9 @@ static uint8_t lamp_count = 0;
 	dmx_adress |= (eeprom_read_byte(EEPR_ADR_DMX_ADR_1)<<8);
 
 	dmx_adress_pointer = (dmx_array+(dmx_adress-1)+2);
+	// TÖRÖLD KI !!!! 
+	dmx_adress_pointer = dmx_array; // FIX ÉRTÉKRE ÁLLÍTÁS IDEIGLENESEN !!
+
 
  }
 
