@@ -22,3 +22,37 @@ feladatok:
 				sqrt(0.006) * 245 = max_speed_interval = 18 ciklus  = 18*6,5us ===> 117us  8,5khz 
 				-- tehát a motor léptetés max sebessége : 117us , 8,5 khz 
 				-- a timer interrupt pedig : 6,5 us, 153khz 
+				
+	- motor sebesség számláló algoritmus: majd csak az stm32 őn 
+			
+			- 	s = (a * t^2 ) / 2
+			-  	t(s) = gyök[ (2*s) / a ] 
+			-  	dt(s) = t(s) - t(s-1)
+			
+			-->    	if(s>0)  // s0 nál nemfut le --> az egész program 
+					t_prev = t_current;				// interruptban lefut  CSAK GYORSULÁSNÁL ÉS LASULÁSNÁL FUT LE!! == NÉL NEM 
+					t_current = sqrt(2*s /a);
+					
+					dt = t_current - t_prev; // CSAK gyorsulásnál 
+					dt = t_prev - t_current; // CSAK lassulásnál 
+					// szintentartásnál nem számolja ujra--> statikus minden változó dt is 
+					
+					--> INTERRUPT BAN 2 IF FLAGEZÉS -> felfele vagy lefele megy 
+					--> ha iránytvált : gyorsult -> most lassul 
+					
+					--> ujraszámolja a t_prev és t_current értékeket 
+					
+					// irányváltásnál: 	if(irányváltás) // csak 1x fut le irányváltás elején 
+										{
+											s--;	//vagy ++ attól függ melyik irány
+											t_prev = t_current;				// interruptban lefut  CSAK GYORSULÁSNÁL ÉS LASULÁSNÁL FUT LE!! == NÉL NEM 
+											t_current = sqrt(2*s /a);
+											// így a végére 2 őt lép mert ezis meg a sima is lefut 
+											// így 2x számolja ujra az időt!! 
+										}
+					
+					
+					
+
+				
+				
