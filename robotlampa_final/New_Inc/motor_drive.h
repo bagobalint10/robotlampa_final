@@ -11,8 +11,8 @@
 
 	#include <avr/io.h>
 
-	void timer_init_tmp(void);
-	void motor_main(void);
+	void motor_1_init(void);
+	void motor_1_main(uint16_t dmx_pos_1);
 
 
 
