@@ -142,13 +142,13 @@
 	 #define ARRAY_ELEMENT 300 
 	 #define ARRAY_ELEMENT_1 300
 
-	 #define MOTOR_DIR_PORT PORTC      //A5 - PC5
-	 #define MOTOR_DIR_PIN PORTC5
-	 #define MOTOR_DIR_DIR DDRC
+	 #define MOTOR_1_DIR_PORT PORTC      // A5 - PC5
+	 #define MOTOR_1_DIR_PIN PORTC5
+	 #define MOTOR_1_DIR_DIR DDRC
 
-	 #define TMP_PORT PORTC     //A5 - PC5
-	 #define TMP_PIN PORTC4
-	 #define TMP_DIR DDRC
+	 #define MOTOR_1_PULSE_PORT PORTB     // A5 - PC5
+	 #define MOTOR_1_PULSE_PIN PORTB1
+	 #define MOTOR_1_PULSE_DIR DDRB
 
 	 #define TIM_COMPARE 10
 

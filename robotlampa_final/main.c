@@ -12,8 +12,7 @@
 #include "dmx_usart.h"
 
 #include "motor_drive.h"
-#include "gpio.h"
-#include "port_config.h"
+
 
 
 int dmx_pos;
@@ -24,11 +23,6 @@ int main(void)
 {
 	timers_init();
 	motor_1_init();
-
-	//PB1 kimenet 
-	PORT_Init(&DDRB,PORTB1, OUTPUT);  // timer output --> motor pulse 
-	PORT_Init(&MOTOR_DIR_DIR,MOTOR_DIR_PIN, OUTPUT);
-	PORT_Init(&TMP_DIR,TMP_PIN, OUTPUT);
 
     while (1) 
     {	 

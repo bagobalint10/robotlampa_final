@@ -115,6 +115,11 @@ void timer_int_init(uint8_t timer, uint8_t interrupt_type)  //pcint init hal
 	if(timer_0_callback_pointer) timer_0_callback_pointer(); // ha tettünk bele callbacket hívja meg
  }
 
+ // tim 1 vectors 
+  ISR(TIMER1_OVF_vect)	// áttenni interrupt.c be
+  {
+	if(timer_1_callback_pointer) timer_1_callback_pointer(); // ha tettünk bele callbacket hívja meg
+  }
  // usart 
 
  void set_usart_int_Callback(uint8_t type ,void (*Callback_function)(void) )

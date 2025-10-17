@@ -47,7 +47,7 @@
 
 
  // timer millis minta kód 
-	/*
+	
 	static uint32_t tmp_current_time = 0;
 	tmp_current_time = millis();
 
@@ -58,7 +58,7 @@
 	{
 		tmp_time_0 = tmp_current_time;
 		villog ^= 0x01;
-	} */
+	} 
 
 
 			
