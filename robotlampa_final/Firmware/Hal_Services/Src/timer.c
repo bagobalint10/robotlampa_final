@@ -29,6 +29,7 @@
 					TCCR0B = prescaler;		// 3. Prescaler beállítása
 					break;
 		 case 1: break;
+
 		 case 2: break;
 		 default: break;
 	 }
@@ -72,4 +73,42 @@
 
 	 return m;
  }
+
+ void timer_1_init(void)
+ {
+	TCCR1A = 0;					// biztonsági 0 - ázás
+	TCCR1B = 0;
+
+	//TCCR1A |= (1 << COM1A1) | (0 << COM1A0) | (1 << WGM11);							// pwm --> pin bekapcsolás, fast pwm mode
+	TCCR1A |= (1 << WGM11);																// pwm --> fast pwm mode
+	TCCR1B |= (1 << WGM13) | (1 << WGM12) | (0 << CS12) | (1 << CS11) | (0 << CS10);	// prescaler, fast pwm mode: 0 -> icr1
+	TIMSK1 |= (1 << TOIE1);		// ctc- ovf interrupt
+
+	OCR1A = TIM_COMPARE;		// kitöltés	beállítása
+	ICR1 = TIM_START_VALUE;		// alap frekvencia beállítása
+
+	sei();						// globális int engedélyezés
+
+ }
+
+  void set_timer_1_ovf_value(uint64_t ovf_value)
+  {
+	  ICR1 = ovf_value; 
+
+  }
+
+  uint16_t get_timer_1_value(void)
+  {
+	return ((uint16_t)(TCNT1H << 8)) | ((uint16_t) TCNT1L);		// kiolvasni a timer értékét
+  }
+
+  void enable_timer_1_out(void)
+  {
+	 TCCR1A |= (1 << COM1A1) | (0 << COM1A0);					// PWM kimenet engedélyezése
+  }
+
+  void disable_timer_1_out(void)
+  {
+	  TCCR1A &= ~((1 << COM1A1) | (1 << COM1A0));				// PWM leválasztása
+  }
 

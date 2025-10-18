@@ -98,10 +98,11 @@
   <avrgcc.compiler.directories.IncludePaths>
     <ListValues>
       <Value>%24(PackRepoDir)\atmel\ATmega_DFP\1.7.374\include\</Value>
-      <Value>../Inc</Value>
-      <Value>../Src</Value>
-      <Value>../New_Inc</Value>
-      <Value>../New_Src</Value>
+      <Value>../Firmware/Hal_Services/Inc</Value>
+      <Value>../Firmware/Hal_Services/Src</Value>
+      <Value>../Firmware/Other</Value>
+      <Value>../Firmware/App/Inc</Value>
+      <Value>../Firmware/App/Src</Value>
     </ListValues>
   </avrgcc.compiler.directories.IncludePaths>
   <avrgcc.compiler.optimization.level>Optimize debugging experience (-Og)</avrgcc.compiler.optimization.level>
@@ -124,87 +125,91 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Inc\buttons.h">
+    <Compile Include="Firmware\App\Inc\buttons.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Inc\control_board.h">
+    <Compile Include="Firmware\App\Inc\control_board.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Inc\dmx_usart.h">
+    <Compile Include="Firmware\App\Inc\lcd_driver.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Inc\eepromh.h">
+    <Compile Include="Firmware\App\Inc\motor_drive.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Inc\gpio.h">
+    <Compile Include="Firmware\App\Inc\relay.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Inc\interrupt.h">
+    <Compile Include="Firmware\App\Inc\segment_write_digit.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Inc\lcd_driver.h">
+    <Compile Include="Firmware\App\Src\buttons.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Inc\port_config.h">
+    <Compile Include="Firmware\App\Src\control_board.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Inc\relay.h">
+    <Compile Include="Firmware\App\Src\lcd_driver.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Inc\segment_write_digit.h">
+    <Compile Include="Firmware\App\Src\motor_drive.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Inc\test_codes.h">
+    <Compile Include="Firmware\App\Src\relay.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Inc\timer.h">
+    <Compile Include="Firmware\App\Src\segment_write_digit.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Firmware\Hal_Services\Inc\dmx_usart.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Firmware\Hal_Services\Inc\eepromh.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Firmware\Hal_Services\Inc\gpio.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Firmware\Hal_Services\Inc\interrupt.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Firmware\Hal_Services\Inc\timer.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Firmware\Hal_Services\Src\dmx_usart.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Firmware\Hal_Services\Src\eeprom.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Firmware\Hal_Services\Src\gpio.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Firmware\Hal_Services\Src\interrupt.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Firmware\Hal_Services\Src\timer.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Firmware\Other\port_config.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Firmware\Other\test_codes.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="main.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="New_Inc\motor_drive.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="New_Src\motor_drive.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Src\buttons.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Src\control_board.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Src\dmx_usart.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Src\eeprom.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Src\gpio.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Src\interrupt.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Src\lcd_driver.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Src\relay.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Src\segment_write_digit.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Src\timer.c">
-      <SubType>compile</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Inc" />
-    <Folder Include="New_Src" />
-    <Folder Include="New_Inc" />
-    <Folder Include="Src" />
+    <Folder Include="Firmware\App\Inc" />
+    <Folder Include="Firmware\App\Src" />
+    <Folder Include="Firmware\Hal_Services" />
+    <Folder Include="Firmware\Hal_Services\Inc" />
+    <Folder Include="Firmware\Hal_Services\Src" />
+    <Folder Include="Firmware\App" />
+    <Folder Include="Firmware\Other" />
+    <Folder Include="Firmware" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>

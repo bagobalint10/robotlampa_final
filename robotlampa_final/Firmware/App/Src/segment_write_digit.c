@@ -51,7 +51,7 @@
 		 }
 
 		 PORT_Write(&SR_CLOCK_PORT, SR_CLOCK_PIN, 1); // clock pulse
-		 PORT_Toggle(&SR_CLOCK_PORT, SR_CLOCK_PIN);
+		 PORT_Write(&SR_CLOCK_PORT, SR_CLOCK_PIN, 0);
 	 }
  }
 

@@ -1,5 +1,4 @@
-/*
- * port_config.h
+ /* port_config.h
  *
  * Created: 2025. 10. 07. 21:01:13
  *  Author: bagob
@@ -151,6 +150,7 @@
 	 #define MOTOR_1_PULSE_DIR DDRB
 
 	 #define TIM_COMPARE 10
+	 #define TIM_START_VALUE 1000 
 
 
 
