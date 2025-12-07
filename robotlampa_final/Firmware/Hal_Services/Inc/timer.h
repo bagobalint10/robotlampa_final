@@ -20,7 +20,4 @@
 		void enable_timer_1_out(void);
 		void disable_timer_1_out(void);
 
-		
-
-
 #endif /* TIMER_H_ */

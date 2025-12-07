@@ -14,6 +14,4 @@
 	void motor_1_init(void);
 	void motor_1_main(uint16_t dmx_pos_1);
 
-
-
 #endif /* MOTOR_DRIVE_H_ */

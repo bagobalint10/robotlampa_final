@@ -5,13 +5,6 @@
  *  Author: bagob
  */ 
 
-#ifndef TEST_CODES_H_
-#define TEST_CODES_H_
-#endif
-
-		// ne includáld sehova!!!! csak egy jegyzet
-		// ha kell egy függvény másold ki és illeszd be !!!
-
 
  ////// 1. CONTROL_BOARD modul 
 
@@ -45,8 +38,7 @@
 	_delay_ms(1);
  }
 
-
- // timer millis minta kód 
+	// timer millis minta kód 
 	
 	static uint32_t tmp_current_time = 0;
 	tmp_current_time = millis();
@@ -54,10 +46,9 @@
 	static uint32_t tmp_time_0 = 0;
 	static uint16_t tmp_interval_0 = 1000;
 
-	if ((uint32_t)(tmp_current_time - tmp_time_0)>= tmp_interval_0)
+	if ((uint32_t)(tmp_current_time - tmp_time_0) >= tmp_interval_0)
 	{
 		tmp_time_0 = tmp_current_time;
-		villog ^= 0x01;
 	} 
 
 

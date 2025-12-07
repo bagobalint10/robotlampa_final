@@ -20,7 +20,4 @@
 
 	void set_usart_int_Callback(uint8_t type ,void (*Callback_function)(void) );
 	
-
-
-
 #endif /* INTERRUPT_H_ */

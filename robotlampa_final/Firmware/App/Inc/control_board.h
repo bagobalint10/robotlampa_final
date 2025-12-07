@@ -9,13 +9,10 @@
 #ifndef CONTROL_BOARD_H_
 #define CONTROL_BOARD_H_
 
-
 	#include <avr/io.h>
 
 	void control_board_main(void);
 	void control_board_init(void);
 	uint32_t millis(void);
-
-
 
 #endif /* CONTROL_BOARD_H_ */

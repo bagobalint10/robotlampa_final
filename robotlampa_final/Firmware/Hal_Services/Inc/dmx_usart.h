@@ -14,6 +14,4 @@
 	void dmx_usart_init(void);
 	void dmx_usart_send(void);
 
-
-
 #endif /* DMX_USART_H_ */
